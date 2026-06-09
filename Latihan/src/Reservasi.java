@@ -14,10 +14,6 @@ public class Reservasi implements InterfaceReservasi{
     public void pesanTiket(Tiket tiket) throws TiketHabisException, RuteTidakDitemukanException {
         KeretaApi kereta = keretaRepository.cariKode(tiket.getKodeKereta());
         
-        if (kereta == null) {
-            throw new RuteTidakDitemukanException("Kereta dengan kode " + tiket.getKodeKereta() + " tidak ditemukan.");
-        }
-
         if (kereta.getSisaKursi() < tiket.getJumlahTiket()) {
             throw new TiketHabisException(kereta.getNamaKereta(), kereta.getSisaKursi());
         }
