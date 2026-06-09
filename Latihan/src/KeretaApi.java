@@ -35,7 +35,7 @@ public class KeretaApi {
 
 interface KeretaApiRepository {
     List<KeretaApi> getAllKereta();
-    KeretaApi cariKode(String kode);
+    KeretaApi cariKode(String kode) throws RuteTidakDitemukanException;
 }
 
 class KeretaRepositoryImpl implements KeretaApiRepository {
@@ -53,12 +53,12 @@ class KeretaRepositoryImpl implements KeretaApiRepository {
     }
 
     @Override
-    public KeretaApi cariKode(String kode) {
+    public KeretaApi cariKode(String kode) throws RuteTidakDitemukanException {
         for (KeretaApi k : daftarKereta) {
             if (k.getKode().equalsIgnoreCase(kode)) {
                 return k;
             }
         }
-        return null;
+        throw new RuteTidakDitemukanException("Kereta dengan kode " + kode + " tidak ditemukan.");
     }
 }
